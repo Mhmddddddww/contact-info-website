@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #B0E0E6; /* Baby Blue Background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #imagePreview {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{8,9}" placeholder="Enter phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="instagram">Instagram Username:</label>
+                <input type="text" id="instagram" name="instagram" placeholder="Enter your Instagram username">
+            </div>
+            <div class="form-group">
+                <label for="picture">Upload Picture:</label>
+                <input type="file" id="picture" name="picture" accept="image/*" onchange="previewImage(this)">
+                <img id="imagePreview" src="#" alt="Image Preview">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImage(input) {
+            const imagePreview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get the input values
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const date = document.getElementById('date').value;
+            const instagram = document.getElementById('instagram').value;
+
+            // Create the WhatsApp message
+            const message = `Full Name: ${fullName}%0APhone Number: ${phone}%0ADate: ${date}%0AInstagram: ${instagram}`;
+
+            // WhatsApp URL with Lebanese country code (+961)
+            const whatsappUrl = `https://wa.me/96171499655?text=${message}`;
+
+            // Redirect to WhatsApp
+            window.location.href = whatsappUrl;
+        });
+    </script>
+</body>
+</html>
